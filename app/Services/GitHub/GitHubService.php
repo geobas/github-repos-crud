@@ -9,6 +9,7 @@ use App\DataTransferObjects\GitHub\Repo;
 use App\DataTransferObjects\GitHub\UpdateRepoData;
 use App\Http\Integrations\GitHub\GitHubConnector;
 use App\Http\Integrations\GitHub\Requests\GetRepo;
+use App\Http\Integrations\GitHub\Requests\GetRepoLanguages;
 
 class GitHubService implements GitHub
 {
@@ -48,10 +49,15 @@ class GitHubService implements GitHub
     }
 
     /**
-     * Get repository's programming languages.
+     * Get a list of programming languages used in a repository.
      */
     public function getRepoLanguages(string $owner, string $repoName): array
     {
+        return $this->connector()
+            ->send(new GetRepoLanguages($owner, $repoName))
+            ->collect()
+            ->keys()
+            ->all();
     }
 
     /**
