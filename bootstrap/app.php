@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             '/github/create/repository',
             '/github/update/repository',
+            '/github/delete/repository',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
