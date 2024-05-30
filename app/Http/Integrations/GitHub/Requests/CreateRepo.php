@@ -3,17 +3,14 @@
 namespace App\Http\Integrations\GitHub\Requests;
 
 use App\DataTransferObjects\GitHub\NewRepoData;
-use App\DataTransferObjects\GitHub\Repo;
-use Carbon\Carbon;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
 class CreateRepo extends Request implements HasBody
 {
-    use HasJsonBody;
+    use HasJsonBody, ResponseMapper;
 
     /**
      * The HTTP method of the request
@@ -46,23 +43,5 @@ class CreateRepo extends Request implements HasBody
             'description' => $this->newRepoData->description,
             'private' => $this->newRepoData->isPrivate,
         ];
-    }
-
-    /**
-     * Map the response	body to a DTO.
-     */
-    public function createDtoFromResponse(Response $response): mixed
-    {
-        $responseData = $response->json();
-
-        return new Repo(
-            id : $responseData['id'],
-            owner : $responseData['owner']['login'],
-            name : $responseData['name'],
-            fullName : $responseData['full_name'],
-            private : $responseData['private'],
-            description : $responseData['description'] ?? '',
-            createdAt : Carbon::parse($responseData['created_at']),
-        );
     }
 }
