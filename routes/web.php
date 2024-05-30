@@ -12,4 +12,5 @@ Route::prefix('/github')->name('repositories.')->group(function () {
     Route::get('/languages/{owner}/{repoName}', [GitHubController::class, 'languages'])->name('languages');
     Route::post('/create/repository', [GitHubController::class, 'create'])->name('create');
     Route::patch('/update/repository', [GitHubController::class, 'update'])->name('update');
+    Route::delete('/delete/repository', [GitHubController::class, 'delete'])->name('delete');
 });

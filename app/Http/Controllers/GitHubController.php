@@ -6,6 +6,7 @@ use App\Contracts\GitHub;
 use App\DataTransferObjects\GitHub\NewRepoData;
 use App\DataTransferObjects\GitHub\UpdateRepoData;
 use App\Http\Requests\RepositoryCreateRequest;
+use App\Http\Requests\RepositoryDeleteRequest;
 use App\Http\Requests\RepositoryUpdateRequest;
 use App\Http\Resources\GitHubRepoLanguagesResource;
 use App\Http\Resources\GitHubRepoResource;
@@ -52,6 +53,19 @@ class GitHubController extends Controller
                 repoName : Arr::pull($validated, 'old_name'),
                 repoData : UpdateRepoData::fromArray($validated)
             )
+        );
+    }
+
+    /**
+     * Delete a repository.
+     */
+    public function delete(RepositoryDeleteRequest $request, GitHub $gitHub): void
+    {
+        $validated = $request->validated();
+
+        $gitHub->deleteRepo(
+            owner : $validated['owner'],
+            repoName : $validated['name'],
         );
     }
 
