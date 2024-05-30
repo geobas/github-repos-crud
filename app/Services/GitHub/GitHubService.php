@@ -8,6 +8,7 @@ use App\DataTransferObjects\GitHub\NewRepoData;
 use App\DataTransferObjects\GitHub\Repo;
 use App\DataTransferObjects\GitHub\UpdateRepoData;
 use App\Http\Integrations\GitHub\GitHubConnector;
+use App\Http\Integrations\GitHub\Requests\CreateRepo;
 use App\Http\Integrations\GitHub\Requests\GetRepo;
 use App\Http\Integrations\GitHub\Requests\GetRepoLanguages;
 
@@ -65,6 +66,9 @@ class GitHubService implements GitHub
      */
     public function createRepo(NewRepoData $repoData): Repo
     {
+        return $this->connector()
+            ->send(new CreateRepo($repoData))
+            ->dtoOrFail();
     }
 
     /**
