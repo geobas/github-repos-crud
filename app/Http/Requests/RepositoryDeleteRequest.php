@@ -2,13 +2,12 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Symfony\Component\HttpFoundation\Response;
 
 class RepositoryDeleteRequest extends FormRequest
 {
+    use HandlesFailedValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -43,18 +42,5 @@ class RepositoryDeleteRequest extends FormRequest
             'name.required' => 'A name is required',
             'name.string' => 'Name must be a string',
         ];
-    }
-
-    /**
-     * Handle a failed validation attempt.
-     *
-     * @throws \Illuminate\Http\Exceptions\HttpResponseException
-     */
-    protected function failedValidation(Validator $validator): void
-    {
-        throw new HttpResponseException(response()->json([
-            'message' => 'One or more validation errors occurred',
-            'errors' => $validator->errors(),
-        ], Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }
