@@ -10,4 +10,13 @@ final readonly class NewRepoData
         public bool $isPrivate,
     ) {
     }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            $data['name'],
+            $data['description'],
+            $data['is_private'],
+        );
+    }
 }
