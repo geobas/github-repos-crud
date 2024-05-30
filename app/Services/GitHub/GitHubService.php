@@ -11,6 +11,7 @@ use App\Http\Integrations\GitHub\GitHubConnector;
 use App\Http\Integrations\GitHub\Requests\CreateRepo;
 use App\Http\Integrations\GitHub\Requests\GetRepo;
 use App\Http\Integrations\GitHub\Requests\GetRepoLanguages;
+use App\Http\Integrations\GitHub\Requests\UpdateRepo;
 
 class GitHubService implements GitHub
 {
@@ -76,6 +77,9 @@ class GitHubService implements GitHub
      */
     public function updateRepo(string $owner, string $repoName, UpdateRepoData $repoData): Repo
     {
+        return $this->connector()
+            ->send(new UpdateRepo($owner, $repoName, $repoData))
+            ->dtoOrFail();
     }
 
     /**
