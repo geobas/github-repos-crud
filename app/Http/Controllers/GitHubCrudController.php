@@ -8,12 +8,11 @@ use App\DataTransferObjects\GitHub\UpdateRepoData;
 use App\Http\Requests\RepositoryCreateRequest;
 use App\Http\Requests\RepositoryDeleteRequest;
 use App\Http\Requests\RepositoryUpdateRequest;
-use App\Http\Resources\GitHubRepoLanguagesResource;
 use App\Http\Resources\GitHubRepoResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Arr;
 
-class GitHubController extends Controller
+class GitHubCrudController extends Controller
 {
     /**
      * Create a repository.
@@ -64,19 +63,6 @@ class GitHubController extends Controller
         $gitHub->deleteRepo(
             owner : $request->getOwner(),
             repoName : $request->getName(),
-        );
-    }
-
-    /**
-     * Fetch a list of programming languages.
-     */
-    public function languages(string $owner, string $repoName, GitHub $gitHub): JsonResource
-    {
-        return GitHubRepoLanguagesResource::make(
-            $gitHub->getRepoLanguages(
-                owner : $owner,
-                repoName : $repoName,
-            )
         );
     }
 }
