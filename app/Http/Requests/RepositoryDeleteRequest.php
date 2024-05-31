@@ -43,4 +43,20 @@ class RepositoryDeleteRequest extends FormRequest
             'name.string' => 'Name must be a string',
         ];
     }
+
+    /**
+     * Return validated owner parameter.
+     */
+    public function getOwner(): string
+    {
+        return $this->validated('owner');
+    }
+
+    /**
+     * Return validated name parameter.
+     */
+    public function getName(): string
+    {
+        return $this->validated('name');
+    }
 }

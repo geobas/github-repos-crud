@@ -61,11 +61,9 @@ class GitHubController extends Controller
      */
     public function delete(RepositoryDeleteRequest $request, GitHub $gitHub): void
     {
-        $validated = $request->validated();
-
         $gitHub->deleteRepo(
-            owner : $validated['owner'],
-            repoName : $validated['name'],
+            owner : $request->getOwner(),
+            repoName : $request->getName(),
         );
     }
 
