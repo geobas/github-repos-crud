@@ -8,12 +8,22 @@ use App\DataTransferObjects\GitHub\UpdateRepoData;
 use App\Http\Requests\RepositoryCreateRequest;
 use App\Http\Requests\RepositoryDeleteRequest;
 use App\Http\Requests\RepositoryUpdateRequest;
+use App\Http\Resources\GitHubRepoCollectionResource;
 use App\Http\Resources\GitHubRepoResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Arr;
 
 class GitHubCrudController extends Controller
 {
+    /**
+     * Get all repositories.
+     */
+    public function all(GitHub $gitHub): JsonResource
+    {
+        // return GitHubRepoResource::collection($gitHub->getRepos());
+        return new GitHubRepoCollectionResource($gitHub->getRepos());
+    }
+
     /**
      * Create a repository.
      */

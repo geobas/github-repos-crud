@@ -9,6 +9,7 @@ Route::get('/', function () {
 });
 
 Route::prefix('/github')->name('repositories.')->group(function () {
+    Route::get('/user/repos', [GitHubCrudController::class, 'all'])->name('all');
     Route::get('/{owner}/{name}', [GitHubCrudController::class, 'show'])->name('show');
     Route::get('/languages/{owner}/{repoName}', GitHubLanguagesController::class)->name('languages');
     Route::post('/create/repository', [GitHubCrudController::class, 'create'])->name('create');
